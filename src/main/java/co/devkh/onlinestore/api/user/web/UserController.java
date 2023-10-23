@@ -17,7 +17,7 @@ public class UserController {
     public void createNewUser(@RequestBody @Valid NewUserDto newUserDto){
         userService.createNewUser(newUserDto);
     }
-    @GetMapping("/uuid")
+    @GetMapping("/{uuid}")
     public UserDto findByUuid(@PathVariable String uuid){
         return userService.findByUuid(uuid);
     }
