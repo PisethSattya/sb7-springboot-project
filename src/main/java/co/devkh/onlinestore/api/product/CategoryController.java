@@ -1,4 +1,4 @@
-package co.devkh.onlinestore.api.product.web;
+package co.devkh.onlinestore.api.product;
 
 import co.devkh.onlinestore.api.product.CategoryService;
 import co.devkh.onlinestore.api.product.web.CategoryDto;

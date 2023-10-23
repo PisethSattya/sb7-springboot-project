@@ -26,10 +26,11 @@ public class UserController {
     public void deleteByUuid(@PathVariable String uuid){
         userService.deleteByUuid(uuid);
     }
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{uuid}")
     public void updateIsDeletedByUuid(@PathVariable String uuid,
                                       @RequestBody IsDeletedDto isDeletedDto){
-        userService.updateIsDeletedByUuid(uuid,isDeletedDto.isDeletedDto());
+        userService.updateIsDeletedByUuid(uuid,isDeletedDto.isDeleted());
 
     }
 }

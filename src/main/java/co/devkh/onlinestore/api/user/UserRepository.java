@@ -3,6 +3,7 @@ package co.devkh.onlinestore.api.user;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean checkUserByUuid(String uuid);
     @Modifying
     @Query("UPDATE User AS u SET u.isDeleted = :isDeleted WHERE u.uuid = :uuid")
-    void updateIsDeletedStatusByUuid(String uuid, Boolean isDeleted);
+    void updateIsDeletedStatusByUuid(String uuid,Boolean isDeleted);
 
     // Derived Query Method
     Boolean existsByUsernameAndIsDeletedFalse(String username);
