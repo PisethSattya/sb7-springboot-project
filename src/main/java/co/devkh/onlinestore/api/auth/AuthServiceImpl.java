@@ -2,7 +2,7 @@ package co.devkh.onlinestore.api.auth;
 
 import co.devkh.onlinestore.api.auth.web.LoginDto;
 import co.devkh.onlinestore.api.auth.web.RegisterDto;
-import co.devkh.onlinestore.api.auth.web.VerifyDto;
+import co.devkh.onlinestore.api.auth.web.VerifyGenerateCodeDto;
 import co.devkh.onlinestore.api.user.User;
 import co.devkh.onlinestore.api.user.UserService;
 import co.devkh.onlinestore.api.user.web.NewUserDto;
@@ -12,6 +12,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -49,11 +50,11 @@ public class AuthServiceImpl implements AuthService{
         helper.setText(String.format("<h1> Your verified code : %s </h1>",verifiedCode),true);
         mailSender.send(mimeMessage);
     }
-
+    @Transactional
     @Override
-    public void verify(VerifyDto verifyDto) {
-        User verifiedUser = authRepository.findByEmailAndVerifiedCodeAndIsDeletedFalse(verifyDto.email(),
-                verifyDto.verifiedCode()).orElseThrow(() ->
+    public void verifyGenerateCode(VerifyGenerateCodeDto verifyGenerateCodeDto) {
+        User verifiedUser = authRepository.findByEmailAndVerifiedCodeAndIsDeletedFalse(verifyGenerateCodeDto.email(),
+                verifyGenerateCodeDto.verifiedCode()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Verify email has been failed..!"));
 
         verifiedUser.setIsVerified(true);
@@ -61,7 +62,6 @@ public class AuthServiceImpl implements AuthService{
 
         authRepository.save(verifiedUser);
     }
-
     @Override
     public void login(LoginDto loginDto) {
 

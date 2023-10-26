@@ -1,6 +1,5 @@
 package co.devkh.onlinestore.api.product;
 
-import co.devkh.onlinestore.api.product.ProductService;
 import co.devkh.onlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.api.product.web.ProductDto;
 import co.devkh.onlinestore.api.product.web.UpdateProductDto;

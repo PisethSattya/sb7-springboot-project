@@ -3,6 +3,7 @@ package co.devkh.onlinestore.api.product;
 import co.devkh.onlinestore.api.product.web.CategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -10,6 +11,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository  categoryRepository;
     private final CategoryMapper categoryMapper;
+    @Transactional
     @Override
     public void createNew(CategoryDto categoryDto) {
         Category category = categoryMapper.fromCategoryDto(categoryDto);

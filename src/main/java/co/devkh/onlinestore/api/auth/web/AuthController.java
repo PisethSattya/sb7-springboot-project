@@ -16,14 +16,14 @@ public class AuthController {
     private final AuthService authService;
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public Map<String,String> register(@Valid @RequestBody RegisterDto registerDto) throws MessagingException {
+    public Map<String,String> register(@RequestBody @Valid RegisterDto registerDto) throws MessagingException {
         authService.register(registerDto);
         return Map.of("message","Please check email and verify..!");
     }
-
-    @PostMapping("/verify")
-    public Map<String,String> verify(@RequestBody VerifyDto verifyDto){
-        authService.verify(verifyDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/verifyGenerateCode")
+    public Map<String,String> verifyGenerateCode(@RequestBody @Valid VerifyGenerateCodeDto verifyGenerateCodeDto){
+        authService.verifyGenerateCode(verifyGenerateCodeDto);
 
         return Map.of("message","Congratulation! Email has been verified..!");
     }

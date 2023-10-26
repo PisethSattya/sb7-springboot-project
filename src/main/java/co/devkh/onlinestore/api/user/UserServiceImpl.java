@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService{
         userRepository.save(newUser);
     }
 
+    @Transactional
     @Override
     public void updateByUuid(String uuid, UpdateUserDto updateUserDto) {
         // Check email if existed
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService{
                         String.format("User UUID = %s doesn't exist in db!",uuid)));
       return userMapper.toUserDto(foundUser);
     }
-
+    @Transactional
     @Override
     public void deleteByUuid(String uuid) {
 

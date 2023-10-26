@@ -15,7 +15,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{uuid}")
     public void updateByUuid(@PathVariable String uuid,
-                             @RequestBody UpdateUserDto updateUserDto){
+                             @RequestBody @Valid UpdateUserDto updateUserDto){
         userService.updateByUuid(uuid,updateUserDto);
     }
 
@@ -36,7 +36,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{uuid}")
     public void updateIsDeletedByUuid(@PathVariable String uuid,
-                                      @RequestBody IsDeletedDto isDeletedDto){
+                                      @RequestBody @Valid IsDeletedDto isDeletedDto){
         userService.updateIsDeletedByUuid(uuid,isDeletedDto.isDeleted());
 
     }

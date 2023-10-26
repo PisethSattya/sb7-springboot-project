@@ -7,6 +7,7 @@ import co.devkh.onlinestore.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    @Transactional
     @Override
     public void createNew(CreateProductDto createProductDto) {
         Product product = productMapper.fromCreateProductDto(createProductDto);
@@ -24,7 +26,7 @@ public class ProductServiceImpl implements ProductService{
         product.setCode("PRO-"+ RandomUtil.generateCode());
         productRepository.save(product);
     }
-
+    @Transactional
     @Override
     public void updateByUuid(String uuid, UpdateProductDto updateProductDto) {
         // Step 1: Check uuid of product in the database
@@ -52,7 +54,7 @@ public class ProductServiceImpl implements ProductService{
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("Product UUID = %s doesn't exist in db!",uuid));
     }
-
+    @Transactional
     @Override
     public void deleteByUuid(String uuid) {
         Product product = productRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

@@ -2,6 +2,7 @@ package co.devkh.onlinestore.api.product;
 
 import co.devkh.onlinestore.api.product.CategoryService;
 import co.devkh.onlinestore.api.product.web.CategoryDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class CategoryController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void createNew(@RequestBody CategoryDto categoryDto)
+    public void createNew(@RequestBody @Valid CategoryDto categoryDto)
     {
         categoryService.createNew(categoryDto);
     }
