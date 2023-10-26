@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{uuid}")
+    public void updateByUuid(@PathVariable String uuid,
+                             @RequestBody UpdateUserDto updateUserDto){
+        userService.updateByUuid(uuid,updateUserDto);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void createNewUser(@RequestBody @Valid NewUserDto newUserDto){

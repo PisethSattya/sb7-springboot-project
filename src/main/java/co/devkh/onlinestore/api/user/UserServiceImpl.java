@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
     @Transactional
     @Override
     public void createNewUser(NewUserDto newUserDto) {
@@ -34,12 +37,32 @@ public class UserServiceImpl implements UserService{
         newUser.setIsVerified(false);
         newUser.setIsDeleted(false);
 
+        boolean isNotFound = newUserDto.roleIds().stream().anyMatch(roleId -> !roleRepository.existsById(roleId));
+
+        if (isNotFound){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Role ID does not exist..!");
+        }
+
+        Set<Role> roles = newUserDto.roleIds().stream()
+                                             .map(roleId -> Role.builder().id(roleId).build())
+                                             .collect(Collectors.toSet());
+        newUser.setRoles(roles);
+
         userRepository.save(newUser);
     }
 
     @Override
     public void updateByUuid(String uuid, UpdateUserDto updateUserDto) {
+        // Check email if existed
+        if (userRepository.existsByEmailAndIsDeletedFalse(updateUserDto.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Email already exists");
+        }
+        User foundUser = userRepository.selectUserByUuid(uuid).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,"User is not Found"));
 
+        userMapper.fromUpdateUserDto(foundUser,updateUserDto);
+
+        userRepository.save(foundUser);
     }
 
     @Override

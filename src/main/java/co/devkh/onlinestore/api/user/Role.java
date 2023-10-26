@@ -1,14 +1,16 @@
 package co.devkh.onlinestore.api.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role
@@ -19,8 +21,8 @@ public class Role
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private Set<User> users;
 
     @ManyToMany
-    private List<Authority> authorities;
+    private Set<Authority> authorities;
 }
