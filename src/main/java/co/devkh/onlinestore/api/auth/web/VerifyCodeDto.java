@@ -3,8 +3,7 @@ package co.devkh.onlinestore.api.auth.web;
 import lombok.Builder;
 
 @Builder
-public record VerifyCodeDto(String email,
-                            Integer digit1,
+public record VerifyCodeDto(Integer digit1,
                             Integer digit2,
                             Integer digit3,
                             Integer digit4,

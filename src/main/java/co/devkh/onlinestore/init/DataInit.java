@@ -1,5 +1,7 @@
 package co.devkh.onlinestore.init;
 
+import co.devkh.onlinestore.api.product.Category;
+import co.devkh.onlinestore.api.product.CategoryRepository;
 import co.devkh.onlinestore.api.user.Authority;
 import co.devkh.onlinestore.api.user.AuthorityRepository;
 import co.devkh.onlinestore.api.user.Role;
@@ -16,9 +18,23 @@ import java.util.Set;
 public class DataInit {
     private final RoleRepository roleRepository;
     private final AuthorityRepository authorityRepository;
+    private final CategoryRepository categoryRepository;
 
     @PostConstruct
     public void init(){
+        categoryRepository.save(Category.builder()
+                        .name("Electronic")
+                        .description("Electronic")
+                        .build());
+        categoryRepository.save(Category.builder()
+                .name("Technologies")
+                .description("Technologies")
+                .build());
+        categoryRepository.save(Category.builder()
+                .name("Designer")
+                .description("Designer")
+                .build());
+
 
         Authority readProduct = Authority.builder().name("product:read").build();
         Authority writeProduct = Authority.builder().name("product:write").build();
