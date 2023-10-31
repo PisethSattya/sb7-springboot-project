@@ -23,6 +23,6 @@ public class Role
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 }

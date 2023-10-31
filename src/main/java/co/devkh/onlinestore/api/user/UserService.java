@@ -3,8 +3,14 @@ package co.devkh.onlinestore.api.user;
 import co.devkh.onlinestore.api.user.web.NewUserDto;
 import co.devkh.onlinestore.api.user.web.UpdateUserDto;
 import co.devkh.onlinestore.api.user.web.UserDto;
+import org.springframework.security.core.Authentication;
 
 public interface UserService {
+    /**
+     *
+     */
+    UserDto me(Authentication authentication);
+
     /**
      * This method is used to create a new user
      * resource into database

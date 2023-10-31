@@ -3,8 +3,11 @@ package co.devkh.onlinestore.api.user;
 import co.devkh.onlinestore.api.user.web.NewUserDto;
 import co.devkh.onlinestore.api.user.web.UpdateUserDto;
 import co.devkh.onlinestore.api.user.web.UserDto;
+import co.devkh.onlinestore.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,6 +22,14 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDto me(Authentication authentication) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        return userMapper.toUserDto(customUserDetails.getUser());
+    }
+
     @Transactional
     @Override
     public void createNewUser(NewUserDto newUserDto) {
@@ -36,6 +47,7 @@ public class UserServiceImpl implements UserService{
         newUser.setUuid(UUID.randomUUID().toString());
         newUser.setIsVerified(false);
         newUser.setIsDeleted(false);
+        newUser.setPassword(passwordEncoder.encode(newUserDto.password()));
 
         boolean isNotFound = newUserDto.roleIds().stream().anyMatch(roleId -> !roleRepository.existsById(roleId));
 

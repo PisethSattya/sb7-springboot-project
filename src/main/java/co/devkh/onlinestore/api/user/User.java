@@ -33,7 +33,7 @@ public class User {
     private Boolean isVerified;
     private Boolean isDeleted;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns =
         @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns =
             @JoinColumn(name = "role_id", referencedColumnName = "id"))

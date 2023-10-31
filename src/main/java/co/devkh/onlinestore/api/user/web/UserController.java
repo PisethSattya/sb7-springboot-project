@@ -2,16 +2,28 @@ package co.devkh.onlinestore.api.user.web;
 
 import co.devkh.onlinestore.api.product.web.IsDeletedDto;
 import co.devkh.onlinestore.api.user.UserService;
+import co.devkh.onlinestore.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+
+    @GetMapping("/me")
+    public UserDto me(Authentication authentication){
+
+        return userService.me(authentication);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{uuid}")
     public void updateByUuid(@PathVariable String uuid,
