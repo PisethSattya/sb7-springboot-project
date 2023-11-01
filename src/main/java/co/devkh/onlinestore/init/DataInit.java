@@ -22,20 +22,8 @@ public class DataInit {
 
     @PostConstruct
     public void init(){
-//        categoryRepository.save(Category.builder()
-//                        .name("Electronic")
-//                        .description("Electronic")
-//                        .build());
-//        categoryRepository.save(Category.builder()
-//                .name("Technologies")
-//                .description("Technologies")
-//                .build());
-//        categoryRepository.save(Category.builder()
-//                .name("Designer")
-//                .description("Designer")
-//                .build());
 //
-//
+//        // Staff-Authorities-Management
 //        Authority readProduct = Authority.builder().name("product:read").build();
 //        Authority writeProduct = Authority.builder().name("product:write").build();
 //        Authority deleteProduct = Authority.builder().name("product:delete").build();
@@ -43,17 +31,24 @@ public class DataInit {
 //        Set<Authority> productAuthorities = Set.of(readProduct,writeProduct,deleteProduct,updateProduct);
 //        authorityRepository.saveAll(productAuthorities);
 //
+//        // User-Authorities-Management
 //        Authority readUser = Authority.builder().name("user:read").build();
 //        Authority writeUser = Authority.builder().name("user:write").build();
 //        Authority deleteUser = Authority.builder().name("user:delete").build();
 //        Authority updateUser = Authority.builder().name("user:update").build();
-//        Set<Authority> userAuthorities = Set.of(readUser,writeUser,deleteUser,updateUser);
+//        Authority userProfile = Authority.builder().name("user:profile").build();
+//        Set<Authority> userAuthorities = Set.of(readUser,writeUser,deleteUser,updateUser,userProfile);
 //        authorityRepository.saveAll(userAuthorities);
 //
+//        // Combine Authorities (Staff + User)
 //        Set<Authority> fullAuthorities = new HashSet<>(){{
-//           addAll(userAuthorities);
-//           addAll(productAuthorities);
+//            addAll(productAuthorities);
+//            addAll(userAuthorities);
 //        }};
+//
+//
+//
+//        // Role Management : Admin,Staff,Customer
 //
 //        Role adminRole = Role.builder()
 //                .name("ADMIN")
@@ -62,14 +57,31 @@ public class DataInit {
 //
 //        Role staffRole = Role.builder()
 //                .name("STAFF")
-//                .authorities(productAuthorities)
+//                .authorities(new HashSet<>(){{
+//                    addAll(productAuthorities);
+//                    add(userProfile);
+//                }})
 //                .build();
 //
 //        Role customerRole = Role.builder()
 //                .name("CUSTOMER")
-//                .authorities(Set.of(writeUser,readUser,updateUser,readProduct))
+//                .authorities(Set.of(readProduct,userProfile))
 //                .build();
+//
 //        roleRepository.saveAll(List.of(adminRole,staffRole,customerRole));
-
+//
+//
+//        categoryRepository.save(Category.builder()
+//                .name("Electronic")
+//                .description("Electronic")
+//                .build());
+//        categoryRepository.save(Category.builder()
+//                .name("Technologies")
+//                .description("Technologies")
+//                .build());
+//        categoryRepository.save(Category.builder()
+//                .name("LifeStyles")
+//                .description("LifeStyles")
+//                .build());
     }
 }

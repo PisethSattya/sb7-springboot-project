@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+    // Resource Server | JWT security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'

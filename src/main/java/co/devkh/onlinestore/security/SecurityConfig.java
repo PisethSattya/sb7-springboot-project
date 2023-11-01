@@ -64,43 +64,42 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        // TODO : What you want to customize
-        http.authorizeHttpRequests(auth->auth
-                .requestMatchers("/api/v1/auth/**","/api/v1/auth/files/**").permitAll()
+        // TODO: What you want to customize
+        http.authorizeHttpRequests(auth-> auth
+                .requestMatchers("/api/v1/auth/**","/api/v1/files/**").permitAll()
                 .requestMatchers(HttpMethod.GET,
-                        "/api/v1/categories/**,",
-                        "/api/v1/products/**").hasAnyAuthority("product:read")
-
+                        "/api/v1/categories/**",
+                        "/api/v1/products/**").hasAuthority("product:read")
                 .requestMatchers(HttpMethod.POST,
-                        "/api/v1/categories/**,",
-                        "/api/v1/products/**").hasAnyAuthority("product:create")
-
+                        "/api/v1/categories/**",
+                        "/api/v1/products/**").hasAuthority("product:write")
                 .requestMatchers(HttpMethod.PUT,
-                        "/api/v1/categories/**,",
-                        "/api/v1/products/**").hasAnyAuthority("product:update")
-
+                        "/api/v1/categories/**",
+                        "/api/v1/products/**").hasAuthority("product:update")
                 .requestMatchers(HttpMethod.DELETE,
-                        "/api/v1/categories/**,",
-                        "/api/v1/products/**").hasAnyAuthority("product:delete")
+                        "/api/v1/categories/**",
+                        "/api/v1/products/**").hasAuthority("product:delete")
 
-                .requestMatchers(HttpMethod.GET,"/api/v1/users/**,").hasAnyAuthority("user:read")
-                .requestMatchers(HttpMethod.POST,"/api/v1/users/**,").hasAnyAuthority("user:create")
-                .requestMatchers(HttpMethod.PUT,"/api/v1/users/**,").hasAnyAuthority("user:update")
-                .requestMatchers(HttpMethod.DELETE,"/api/v1/users/**,").hasAnyAuthority("user:delete")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAuthority("user:profile")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("user:read")
+                .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasAuthority("user:write")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAuthority("user:update")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("user:delete")
 
                 .anyRequest().authenticated());
 
-        // TODO : Use default form login
-    //    http.formLogin(Customizer.withDefaults());
+        // TODO : Use default login
+        // httpSecurity.formLogin(Customizer.withDefaults());
 
-        // TODO : Configure HTTP Basic for Client Application. Example : Postman, Insomnia, ...
+        // TODO : Configure HTTP Basic for Client Application. Example : Postman, Insomnia
         http.httpBasic(Customizer.withDefaults());
         http.csrf(token->token.disable());
 
-        // TODO : Update API policy to STATELESS
+        // TODO : Update API policy to STATELESS (Every communications is STATELESS)
         http.sessionManagement(session->session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+        // TODO Purpose when we configured already we need to return build this configured.
         return http.build();
     }
 }
