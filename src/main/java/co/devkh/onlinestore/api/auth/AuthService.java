@@ -1,12 +1,11 @@
 package co.devkh.onlinestore.api.auth;
 
-import co.devkh.onlinestore.api.auth.web.LoginDto;
-import co.devkh.onlinestore.api.auth.web.RegisterDto;
-import co.devkh.onlinestore.api.auth.web.VerifyGenerateCodeDto;
+import co.devkh.onlinestore.api.auth.web.*;
 import jakarta.mail.MessagingException;
 
 public interface AuthService {
+    AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
     void register(RegisterDto registerDto) throws MessagingException;
     void verifyGenerateCode(VerifyGenerateCodeDto verifyGenerateCodeDto);
-    void login(LoginDto loginDto);
+    AuthDto login(LoginDto loginDto);
 }
