@@ -18,7 +18,7 @@ public class AuthController {
 
     @Value("${app.base-uri}")
     private String appBaseUri;
-
+    // refresh Token
     @PostMapping("/token")
     public AuthDto refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto){
        return authService.refreshToken(refreshTokenDto);
